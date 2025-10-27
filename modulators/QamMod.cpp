@@ -77,10 +77,12 @@ std::vector<bool> QamMod::Demod(std::vector<float> &signals) {
     auto t = 0.0f;
     auto r = 0.0f;
     auto i = 0.0f;
+    auto ind = 0;
     std::vector<std::complex<float>> res;
     for (auto &&s: signals) {
-        r += s * cos(2 * pi * f_ * t);
-        i += s * sin(2 * pi * f_ * t);
+        r += s * cos_[ind];
+        i += s * sin_[ind];
+        ind = (ind +1) % cos_.size();
         t+=dt_;
         if (t >= T_) {
             res.emplace_back(r*T_,i*T_);

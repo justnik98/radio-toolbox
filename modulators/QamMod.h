@@ -35,6 +35,7 @@ private:
     float n_samples_;
 
     std::vector<float> cos_;
+
     std::vector<float> sin_;
 
     std::vector<std::complex<float> > complex_signals_;
