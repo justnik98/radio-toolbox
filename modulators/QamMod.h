@@ -9,7 +9,7 @@
 
 class QamMod : public IModulator {
 public:
-    explicit QamMod(uint32_t q, uint32_t A);
+    explicit QamMod(uint32_t q, float mean_energy);
 
     std::vector<std::complex<float> > Mod(std::vector<bool> &bits) override;
 
@@ -20,7 +20,7 @@ public:
 private:
     void Preload();
 
-    uint32_t A_;
+    float A_;
 };
 
 

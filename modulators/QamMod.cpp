@@ -4,7 +4,7 @@
 
 #include "QamMod.h"
 
-QamMod::QamMod(uint32_t q, uint32_t A) : IModulator(q), A_(A) {
+QamMod::QamMod(uint32_t q, float mean_energy) : IModulator(q), A_(mean_energy) {
     Preload();
 }
 
@@ -41,7 +41,7 @@ std::vector<bool> QamMod::Demod(std::vector<std::complex<float> > &signals) {
             }
         }
         for (auto i = 0; i < k_; ++i) {
-            bool b = res & 1 << (k_ - i-1);
+            bool b = res & 1 << (k_ - i - 1);
             result.push_back(b);
         }
     }
