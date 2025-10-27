@@ -49,7 +49,7 @@ std::vector<bool> QamMod::DemodComplex(std::vector<std::complex<float> > &signal
         }
         for (auto i = 0; i < k_; ++i) {
             bool b = res & 1 << (k_ - i - 1);
-            result.push_back(b);
+            result.emplace_back(b);
         }
     }
     return result;
