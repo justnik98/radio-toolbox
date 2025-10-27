@@ -9,6 +9,8 @@
 #include <vector>
 #include <complex>
 
+using std::numbers::pi;
+
 class IModulator {
 public:
     explicit IModulator(uint32_t q) : q_(q) {
@@ -16,16 +18,16 @@ public:
         signals_.resize(q_);
     }
 
-    virtual std::vector<std::complex<float> > Mod(std::vector<bool> &bits) = 0;
+    virtual std::vector<float> Mod(std::vector<bool> &bits) = 0;
 
-    virtual std::vector<bool> Demod(std::vector<std::complex<float> > &signals) = 0;
+    virtual std::vector<bool> Demod(std::vector<float> &signals) = 0;
 
     virtual ~IModulator() = default;
 
 protected:
     uint32_t q_ = 0;
     uint32_t k_ = 0;
-    std::vector<std::complex<float> > signals_;
+    std::vector<std::vector<float> > signals_;
 };
 
 

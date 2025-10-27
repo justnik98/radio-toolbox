@@ -7,4 +7,6 @@ add_executable(radio_toolbox main.cpp
         modulators/IModulator.h
         modulators/QamMod.cpp
         modulators/QamMod.h
+        modulators/PmMod.cpp
+        modulators/PmMod.h
 )

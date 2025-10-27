@@ -9,11 +9,15 @@
 
 class QamMod : public IModulator {
 public:
-    explicit QamMod(uint32_t q, float mean_energy);
+    QamMod(uint32_t q, float mean_energy, float frequency, float T);
 
-    std::vector<std::complex<float> > Mod(std::vector<bool> &bits) override;
+    std::vector<std::complex<float> > ModComplex(std::vector<bool> &bits) const;
 
-    std::vector<bool> Demod(std::vector<std::complex<float> > &signals) override;
+    std::vector<bool> DemodComplex(std::vector<std::complex<float> > &signals) const;
+
+    std::vector<float> Mod(std::vector<bool> &bits) override;
+
+    std::vector<bool> Demod(std::vector<float> &signals) override;
 
     ~QamMod() override = default;
 
@@ -21,6 +25,19 @@ private:
     void Preload();
 
     float A_;
+
+    float f_;
+
+    float T_;
+
+    float dt_;
+
+    float n_samples_;
+
+    std::vector<float> cos_;
+    std::vector<float> sin_;
+
+    std::vector<std::complex<float> > complex_signals_;
 };
 
 
