@@ -4,7 +4,7 @@
 
 using namespace std;
 int main() {
-    auto num = 1e6;
+    auto num = 36e5;
     vector<bool> bits(num);
     for (auto && bit : bits) {
         bit = rand() % 2;
@@ -15,7 +15,7 @@ int main() {
     // }
     cout << "\n !!!! "<< endl;
 
-    QamMod qam_mod(16, 1, 1000, 1e-2);
+    QamMod qam_mod(256, 1, 800e6, 2e-8);
     auto start = chrono::high_resolution_clock::now();
     auto signals = qam_mod.Mod(bits);
     auto start2 = chrono::high_resolution_clock::now();

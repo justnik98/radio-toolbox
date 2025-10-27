@@ -20,7 +20,7 @@ public:
 
     virtual std::vector<float> Mod(std::vector<bool> &bits) = 0;
 
-    virtual std::vector<bool> Demod(std::vector<float> &signals) = 0;
+    virtual std::vector<bool> Demod(const std::vector<float> &signals) = 0;
 
     virtual ~IModulator() = default;
 
