@@ -1,0 +1,32 @@
+//
+// Created by yanni on 27.10.2025.
+//
+
+#ifndef RADIO_TOOLBOX_IMODULATOR_H
+#define RADIO_TOOLBOX_IMODULATOR_H
+#include <complex>
+#include <cstdint>
+#include <vector>
+#include <complex>
+
+class IModulator {
+public:
+    explicit IModulator(uint32_t q) : q_(q) {
+        k_ = round(std::log2(q));
+        signals_.resize(q_);
+    }
+
+    virtual std::vector<std::complex<float> > Mod(std::vector<bool> &bits) = 0;
+
+    virtual std::vector<bool> Demod(std::vector<std::complex<float> > &signals) = 0;
+
+    virtual ~IModulator() = default;
+
+protected:
+    uint32_t q_ = 0;
+    uint32_t k_ = 0;
+    std::vector<std::complex<float> > signals_;
+};
+
+
+#endif //RADIO_TOOLBOX_IMODULATOR_H

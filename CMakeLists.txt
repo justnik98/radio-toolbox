@@ -3,4 +3,8 @@ project(radio_toolbox)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(radio_toolbox main.cpp)
+add_executable(radio_toolbox main.cpp
+        modulators/IModulator.h
+        modulators/QamMod.cpp
+        modulators/QamMod.h
+)
