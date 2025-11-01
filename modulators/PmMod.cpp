@@ -4,10 +4,7 @@
 
 #include "PmMod.h"
 
-PmMod::PmMod(uint32_t q, float mean_energy, float frequency, float T) : IModulator(q), f_(frequency),
-                                                                        T_(T) {
-    dt_ = 1.0f / (7.0f * f_);
-    n_samples_ = T / dt_;
+PmMod::PmMod(uint32_t q, float mean_energy, float frequency, float T) : IModulator(q, frequency, T) {
     complex_signals_.resize(q_);
     signals_.resize(q_);
     E_ = mean_energy;
@@ -77,7 +74,7 @@ std::vector<bool> PmMod::Demod(const std::vector<float> &signals) {
     auto i = 0.0f;
     auto ind = 0;
     std::vector<std::complex<float> > res;
-    res.reserve(signals.size() * dt_ / T_ + 1); // Оценка количества символов
+    res.reserve(signals.size() / n_samples_); // Оценка количества символов
     for (auto &&s: signals) {
         r += s * cos_[ind];
         i += s * sin_[ind];
@@ -101,8 +98,10 @@ void PmMod::Preload() {
         complex_signals_[i] = std::complex<float>(i_part, q_part);
         for (auto t = 0.0; t < T_; t += dt_) {
             auto s = cos(2 * pi * f_ * t + theta);
-            cos_.emplace_back(cos(2 * pi * f_ * t));
-            sin_.emplace_back(sin(2 * pi * f_ * t));
+            if (i == 0) {
+                cos_.emplace_back(cos(2 * pi * f_ * t));
+                sin_.emplace_back(sin(2 * pi * f_ * t));
+            }
             signals_[i].push_back(s);
         }
     }

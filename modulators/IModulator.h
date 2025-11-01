@@ -13,7 +13,7 @@ using std::numbers::pi;
 
 class IModulator {
 public:
-    explicit IModulator(uint32_t q);
+    IModulator(uint32_t q, float f, float T);
 
     virtual std::vector<float> Mod(std::vector<bool> &bits) = 0;
 
@@ -22,8 +22,18 @@ public:
     virtual ~IModulator() = default;
 
 protected:
-    uint32_t q_ = 0;
-    uint32_t k_ = 0;
     std::vector<std::vector<float> > signals_;
+
+    uint32_t q_ = 0;
+
+    uint32_t k_ = 0;
+
+    float f_;
+
+    float T_;
+
+    float dt_;
+
+    uint32_t n_samples_;
 };
 #endif //RADIO_TOOLBOX_IMODULATOR_H

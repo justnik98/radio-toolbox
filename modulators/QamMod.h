@@ -7,7 +7,7 @@
 #include "IModulator.h"
 
 
-class QamMod : public IModulator {
+class QamMod final : public IModulator {
 public:
     QamMod(uint32_t q, float mean_energy, float frequency, float T);
 
@@ -24,15 +24,7 @@ public:
 private:
     void Preload();
 
-    float A_{};
-
-    float f_;
-
-    float T_;
-
-    float dt_;
-
-    float n_samples_;
+    float A_;
 
     float avg_energy_{};
 
@@ -42,7 +34,7 @@ private:
 
     std::vector<std::complex<float> > complex_signals_;
 
-    static float CalcAvgEnergy(const std::vector<std::complex<float>> & signals) ;
+    static float CalcAvgEnergy(const std::vector<std::complex<float> > &signals);
 };
 
 

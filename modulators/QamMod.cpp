@@ -7,10 +7,7 @@
 #include <cmath>
 #include <iostream>
 
-QamMod::QamMod(uint32_t q, float mean_energy, float frequency, float T) : IModulator(q), f_(frequency),
-                                                                          T_(T) {
-    dt_ = 1.0f / (7.0f * f_);
-    n_samples_ = T / dt_;
+QamMod::QamMod(uint32_t q, float mean_energy, float frequency, float T) : IModulator(q, frequency, T) {
     complex_signals_.resize(q_);
     signals_.resize(q_);
     A_ = std::sqrt(mean_energy / (2.0f * (q_ - 1)) / (3.0f * (k_ - 1) * (k_ - 1)));
@@ -107,8 +104,10 @@ void QamMod::Preload() {
         avg_energy_ += e;
         for (auto t = 0.0; t < T_; t += dt_) {
             auto s = si1 * cos(2 * pi * f_ * t) + si2 * sin(2 * pi * f_ * t);
-            cos_.emplace_back(cos(2 * pi * f_ * t));
-            sin_.emplace_back(sin(2 * pi * f_ * t));
+            if (i == 0) {
+                cos_.emplace_back(cos(2 * pi * f_ * t));
+                sin_.emplace_back(sin(2 * pi * f_ * t));
+            }
             signals_[i].push_back(s);
         }
     }

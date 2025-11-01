@@ -7,41 +7,33 @@
 
 #include "IModulator.h"
 
-class PmMod: public IModulator {
-    public:
-        PmMod(uint32_t q, float mean_energy, float frequency, float T);
+class PmMod final : public IModulator {
+public:
+    PmMod(uint32_t q, float mean_energy, float frequency, float T);
 
-        std::vector<std::complex<float> > ModComplex(std::vector<bool> &bits) const;
+    std::vector<std::complex<float> > ModComplex(std::vector<bool> &bits) const;
 
-        [[nodiscard]] std::vector<bool> DemodComplex(const std::vector<std::complex<float> > &signals) const;
+    [[nodiscard]] std::vector<bool> DemodComplex(const std::vector<std::complex<float> > &signals) const;
 
-        std::vector<float> Mod(std::vector<bool> &bits) override;
+    std::vector<float> Mod(std::vector<bool> &bits) override;
 
-        std::vector<bool> Demod(const std::vector<float> &signals) override;
+    std::vector<bool> Demod(const std::vector<float> &signals) override;
 
-        ~PmMod() override = default;
+    ~PmMod() override = default;
 
-    private:
-        void Preload();
+private:
+    void Preload();
 
-        float E_{};
+    float E_;
 
-        float f_;
+    std::vector<float> cos_;
 
-        float T_;
+    std::vector<float> sin_;
 
-        float dt_;
+    std::vector<std::complex<float> > complex_signals_;
 
-        float n_samples_;
-
-        std::vector<float> cos_;
-
-        std::vector<float> sin_;
-
-        std::vector<std::complex<float> > complex_signals_;
-
-        static float CalcAvgEnergy(const std::vector<std::complex<float>> & signals) ;
-    };
+    static float CalcAvgEnergy(const std::vector<std::complex<float> > &signals);
+};
 
 
 #endif //RADIO_TOOLBOX_PMMOD_H
