@@ -9,7 +9,7 @@
 
 class QamMod : public IModulator {
 public:
-    QamMod(uint32_t q, float max_energy, float frequency, float T);
+    QamMod(uint32_t q, float mean_energy, float frequency, float T);
 
     std::vector<std::complex<float> > ModComplex(std::vector<bool> &bits) const;
 
@@ -24,7 +24,7 @@ public:
 private:
     void Preload();
 
-    float A_;
+    float A_{};
 
     float f_;
 
@@ -34,7 +34,7 @@ private:
 
     float n_samples_;
 
-    float avg_energy_;
+    float avg_energy_{};
 
     std::vector<float> cos_;
 
