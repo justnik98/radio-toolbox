@@ -39,7 +39,6 @@ std::vector<bool> QamMod::DemodComplex(const std::vector<std::complex<float> > &
     std::vector<bool> result;
 
     const float scale = std::sqrt(avg_energy_ / CalcAvgEnergy(signals));
-    std::cout << "Scale is: " << scale << std::endl;
     result.reserve(signals.size() * k_);
     auto res = 0;
     for (const auto signal: signals) {

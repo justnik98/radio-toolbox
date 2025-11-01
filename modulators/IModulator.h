@@ -13,14 +13,7 @@ using std::numbers::pi;
 
 class IModulator {
 public:
-    explicit IModulator(uint32_t q) : q_(q) {
-        if (q < 4 || (q & (q - 1)) != 0) {
-            throw std::invalid_argument("M must be a power of 2 and >= 4");
-        }
-        k_ = round(std::log2(q));
-        signals_.resize(q_);
-
-    }
+    explicit IModulator(uint32_t q);
 
     virtual std::vector<float> Mod(std::vector<bool> &bits) = 0;
 
@@ -33,6 +26,4 @@ protected:
     uint32_t k_ = 0;
     std::vector<std::vector<float> > signals_;
 };
-
-
 #endif //RADIO_TOOLBOX_IMODULATOR_H

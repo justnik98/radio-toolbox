@@ -13,7 +13,7 @@ public:
 
     std::vector<std::complex<float> > ModComplex(std::vector<bool> &bits) const;
 
-    std::vector<bool> DemodComplex(const std::vector<std::complex<float> > &signals) const;
+    [[nodiscard]] std::vector<bool> DemodComplex(const std::vector<std::complex<float> > &signals) const;
 
     std::vector<float> Mod(std::vector<bool> &bits) override;
 
@@ -42,7 +42,7 @@ private:
 
     std::vector<std::complex<float> > complex_signals_;
 
-    static float CalcAvgEnergy(const std::vector<std::complex<float>> & vector) ;
+    static float CalcAvgEnergy(const std::vector<std::complex<float>> & signals) ;
 };
 
 
