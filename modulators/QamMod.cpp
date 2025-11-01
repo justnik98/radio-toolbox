@@ -9,7 +9,7 @@
 
 QamMod::QamMod(uint32_t q, float max_energy, float frequency, float T) : IModulator(q), A_(max_energy), f_(frequency),
                                                                          T_(T) {
-    dt_ = 1.0f / (10.0f * f_);
+    dt_ = 1.0f / (7.0f * f_);
     n_samples_ = T / dt_;
     complex_signals_.resize(q_);
     signals_.resize(q_);
@@ -37,16 +37,14 @@ std::vector<std::complex<float> > QamMod::ModComplex(std::vector<bool> &bits) co
 std::vector<bool> QamMod::DemodComplex(const std::vector<std::complex<float> > &signals) const {
     std::vector<bool> result;
 
-    const auto scale = sqrt(avg_energy_/CalcAvgEnergy(signals));
+    const float scale = std::sqrt(avg_energy_/CalcAvgEnergy(signals));
     std::cout<<  "Scale is: "<< scale<<std::endl;
     result.reserve(signals.size() * k_);
     auto res = 0;
     for (const auto signal: signals) {
         auto dmin = std::numeric_limits<float>::infinity();
         for (auto i = 0; i < complex_signals_.size(); ++i) {
-            const float d = pow(complex_signals_[i].real() - signal.real()*scale, 2) +
-                            pow(complex_signals_[i].imag() - signal.imag()*scale, 2);
-            if (d < dmin) {
+            if (const float d = std::norm(complex_signals_[i] - signal*scale); d < dmin) {
                 dmin = d;
                 res = i;
             }
@@ -116,7 +114,7 @@ void QamMod::Preload() {
     avg_energy_ /= static_cast<float>(q_);
 }
 
-float QamMod::CalcAvgEnergy(const std::vector<std::complex<float> > &signals) const {
+float QamMod::CalcAvgEnergy(const std::vector<std::complex<float> > &signals) {
     auto avg = 0.0;
     for (auto &&s: signals) {
         avg += std::norm(s);

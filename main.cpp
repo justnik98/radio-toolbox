@@ -4,18 +4,18 @@
 
 using namespace std;
 int main() {
-    auto num = 36e5;
+    auto num = 36;
     vector<bool> bits(num);
     for (auto && bit : bits) {
         bit = rand() % 2;
     }
 
-    // for (auto && bit : bits) {
-    //     cout << bit;
-    // }
+    for (auto && bit : bits) {
+        cout << bit;
+    }
     cout << "\n !!!! "<< endl;
 
-    QamMod qam_mod(256, 1, 800e6, 2e-8);
+    QamMod qam_mod(16, 1, 800e6, 2e-8);
     auto start = chrono::high_resolution_clock::now();
     auto signals = qam_mod.Mod(bits);
     auto start2 = chrono::high_resolution_clock::now();
@@ -25,9 +25,9 @@ int main() {
     auto duration = duration_cast<chrono::microseconds>(start2 - start);
     auto duration2 = duration_cast<chrono::microseconds>(stop - start2);
 
-    // for (auto && bit : bits) {
-    //     cout << bit;
-    // }
+    for (auto && bit : bits) {
+        cout << bit;
+    }
     cout << endl << duration.count()<< endl << duration2.count() << endl;
     cout << endl << "speed bits/sec: \n" << num*1e6/duration.count() << endl << num*1e6/duration2.count() << endl;
     return 0;

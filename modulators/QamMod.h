@@ -42,7 +42,7 @@ private:
 
     std::vector<std::complex<float> > complex_signals_;
 
-    float CalcAvgEnergy(const std::vector<std::complex<float>> & vector) const;
+    static float CalcAvgEnergy(const std::vector<std::complex<float>> & vector) ;
 };
 
 
