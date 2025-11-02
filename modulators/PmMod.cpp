@@ -7,7 +7,7 @@
 PmMod::PmMod(uint32_t q, float mean_energy, float frequency, float T) : IModulator(q, frequency, T) {
     complex_signals_.resize(q_);
     signals_.resize(q_);
-    E_ = mean_energy;
+    E_ = std::sqrt(mean_energy);
     Preload();
 }
 
@@ -97,7 +97,7 @@ void PmMod::Preload() {
         const auto q_part = -sin(theta);
         complex_signals_[i] = std::complex<float>(i_part, q_part);
         for (auto t = 0.0; t < T_; t += dt_) {
-            auto s = cos(2 * pi * f_ * t + theta);
+            auto s = std::sqrt(E_)*cos(2 * pi * f_ * t + theta);
             if (i == 0) {
                 cos_.emplace_back(cos(2 * pi * f_ * t));
                 sin_.emplace_back(sin(2 * pi * f_ * t));
