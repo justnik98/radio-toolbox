@@ -10,4 +10,6 @@ add_executable(radio_toolbox main.cpp
         modulators/PmMod.cpp
         modulators/PmMod.h
         modulators/IModulator.cpp
+        tools/Fft.cpp
+        tools/Fft.h
 )

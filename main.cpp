@@ -1,10 +1,12 @@
 #include <chrono>
 #include <iostream>
+
+#include "modulators/PmMod.h"
 #include "modulators/QamMod.h"
 
 using namespace std;
 int main() {
-    auto num = 36;
+    auto num = 360;
     vector<bool> bits(num);
     for (auto && bit : bits) {
         bit = rand() % 2;
@@ -15,7 +17,7 @@ int main() {
     }
     cout << "\n !!!! "<< endl;
 
-    QamMod qam_mod(16, 1, 800e6, 2e-8);
+    PmMod qam_mod(16, 2, 800e6, 2e-8);
     auto start = chrono::high_resolution_clock::now();
     auto signals = qam_mod.Mod(bits);
     auto start2 = chrono::high_resolution_clock::now();
